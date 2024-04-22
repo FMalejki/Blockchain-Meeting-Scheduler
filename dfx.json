@@ -3,7 +3,9 @@
     "BlockchainMeetingScheduler_backend": {
       "candid": "src/BlockchainMeetingScheduler_backend/BlockchainMeetingScheduler_backend.did",
       "package": "BlockchainMeetingScheduler_backend",
-      "type": "rust"
+      "type": "rust",
+      "build": "./build.sh BlockchainMeetingScheduler_backend",
+      "wasm": "target/wasm32-unknown-unknown/release/BlockchainMeetingScheduler_backend.wasm"
     },
     "BlockchainMeetingScheduler_frontend": {
       "dependencies": [

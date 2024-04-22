@@ -11,6 +11,11 @@
     "start": "npm start --workspaces --if-present",
     "test": "npm test --workspaces --if-present"
   },
+  "local": {
+    "bind": "localhost:4943",
+    "type": "ephemeral",
+    "replica": { "subnet_type": "system" }
+  },
   "type": "module",
   "workspaces": [
     "src/BlockchainMeetingScheduler_frontend"
