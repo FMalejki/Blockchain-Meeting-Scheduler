@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { BlockchainMeetingScheduler_backend } from 'declarations/BlockchainMeetingScheduler_backend';
-import { BrowserRouter as Router, Route, Switch,Link } from 'react-router-dom';
-import Home from './components/Home.jsx';
-import About from './components/About.jsx';
+import { BrowserRouter as Router } from 'react-router-dom';
+import MainComponent from './components/MainComponent.jsx'
 
 function App() {
   const [greeting, setGreeting] = useState('');
@@ -15,19 +14,18 @@ function App() {
     });
     return false;
   }
-  
+
   return (
     <main>
-      <Router>
-        <Switch>
-          <Route path="/" exact>
-            <Home/>
-          </Route>
-          <Route path="/about">
-            <About/>
-          </Route>
-        </Switch>
-      </Router>
+      <img src="/logo2.svg" alt="DFINITY logo" />
+      <br />
+      <br />
+      <form action="#" onSubmit={handleSubmit}>
+        <label htmlFor="name">Enter your name: &nbsp;</label>
+        <input id="name" alt="Name" type="text" />
+        <button type="submit">Click Me!</button>
+      </form>
+      <section id="greeting">{greeting}</section>
     </main>
   );
 }

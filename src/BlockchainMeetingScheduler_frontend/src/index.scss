@@ -1,5 +1,11 @@
+@import 'bootstrap';
+
+h1{
+  font-family:'Courier New', Courier, monospace;
+}
+
 body {
-  font-family: sans-serif;
+  font-family: 'Courier New';
   font-size: 1.5rem;
 }
 
@@ -34,4 +40,56 @@ button[type="submit"] {
 
 #greeting:empty {
   display: none;
+}
+
+header{
+  display:flex;
+}
+
+//classes:
+.display-5{
+  margin-top: -10px;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+
+
+.sticky{
+  width: 100%;
+  position: fixed ;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+}
+
+.logoBMSdiv{
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.logoBMSHome{
+  width: 200px;
+}
+
+.logoBMS{
+  layout:left;
+  width: 50px;
+}
+
+.kontenerHome{
+  padding-top: 3%;
+}
+
+.subtext{
+  font-size:10px;
+  margin-left: 10px;
+}
+
+.bottom0{
+  bottom:0;
+}
+
+.center {
+  text-align: center;
+  align-self: center;
 }

@@ -1,6 +1,7 @@
 use std::cell::RefCell;
 
 thread_local! {
+    //not used
     static WPISY: RefCell<Vec<String>> = RefCell::default();
 }
 
@@ -9,6 +10,7 @@ fn greet(name: String) -> String {
     format!("Hello, {}!", name)
 }
 
+//not used
 #[ic_cdk::update]
 fn dodaj_wpis(wpis: String) {
     WPISY.with(|wpisy| {
@@ -17,6 +19,7 @@ fn dodaj_wpis(wpis: String) {
     });
 }
 
+//not used
 #[ic_cdk::query]
 fn pobierz_wpisy() -> Vec<String>{
     WPISY.with(|wpisy| wpisy.borrow().clone())

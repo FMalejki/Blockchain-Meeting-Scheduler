@@ -14,10 +14,16 @@
   "local": {
     "bind": "localhost:4943",
     "type": "ephemeral",
-    "replica": { "subnet_type": "system" }
+    "replica": {
+      "subnet_type": "system"
+    }
   },
   "type": "module",
   "workspaces": [
     "src/BlockchainMeetingScheduler_frontend"
-  ]
+  ],
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "react-router-dom": "^5.3.4"
+  }
 }
