@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { BlockchainMeetingScheduler_backend } from 'declarations/BlockchainMeetingScheduler_backend';
 import { BrowserRouter as Router, Route, Switch,Link } from 'react-router-dom';
 import Home from './components/Home.jsx';
-import About from './components/About.jsx';
+import MeetingCreator from './components/Meeting-Creator.jsx';
+import MeetingNumber from './components/Meeting-Number.jsx';
+
 
 function App() {
   const [greeting, setGreeting] = useState('');
@@ -23,8 +25,11 @@ function App() {
           <Route path="/" exact>
             <Home/>
           </Route>
-          <Route path="/about">
-            <About/>
+          <Route path="/meeting-creator">
+            <MeetingCreator/>
+          </Route>
+          <Route path="/meeting-SYA246">
+            <MeetingNumber/>
           </Route>
         </Switch>
       </Router>

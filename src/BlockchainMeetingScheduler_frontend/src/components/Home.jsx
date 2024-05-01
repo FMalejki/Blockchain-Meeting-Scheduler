@@ -15,17 +15,16 @@ function Home() {
                 <p>by AGH Blockchain</p>
                 <br />
                 <br />
+                <br />
+                <br />
                 <h1 class="mt-10">SCHEDULE YOUR MEETING NOW!</h1>
                 <p>Login using your ICP Internet Identity!</p>
                 <button type="button" class="btn btn-success btn-lg">START!</button> 
             </div>
             <br />
-            <div class="container center">
-                <br />
-                <h1 class="mt-10">...OR REGISTER NOW!</h1>
-                <p>Also using your ICP Internet Identity!</p>
-                <button type="button" class="btn btn-success btn-lg">REGISTER!</button> 
-            </div>
+            <br />
+            <br />
+            <br />
             <br />
             <div class="container center border-top border-black">
                 <br />

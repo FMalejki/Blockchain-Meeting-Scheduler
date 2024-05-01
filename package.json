@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "bootstrap": "^5.3.3",
+    "react-calendar": "^4.8.0",
     "react-router-dom": "^5.3.4"
   }
 }
