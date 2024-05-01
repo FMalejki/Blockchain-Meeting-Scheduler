@@ -171,6 +171,14 @@ input[type=range]{
   pointer-events: none;
 }
 
+.activeOnMeetingCreator{
+  display:flex;
+}
+
+.inactive{
+  display: none;
+}
+
 #fromSlider{
   height:0;
   z-index:1;

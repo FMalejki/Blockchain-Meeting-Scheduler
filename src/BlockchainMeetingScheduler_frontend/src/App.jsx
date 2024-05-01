@@ -8,6 +8,8 @@ import MeetingNumber from './components/Meeting-Number.jsx';
 
 function App() {
   const [greeting, setGreeting] = useState('');
+  const [meetings, setMeetings] = useState([]);
+
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -16,7 +18,20 @@ function App() {
       setGreeting(greeting);
     });
     return false;
+
   }
+
+  const createMeeting = (meeting) => {
+    // Generate a unique link for the meeting
+    const uniqueLink = generateUniqueLink();
+    const newMeeting = { ...meeting, link: uniqueLink };
+    setMeetings([...meetings, newMeeting]);
+  };
+
+  const generateUniqueLink = () =>{
+    const uniqueLink = "SYA246";
+    return uniqueLink;
+  };
   
   return (
     <main>

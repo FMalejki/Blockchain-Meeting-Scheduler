@@ -61,11 +61,13 @@
 
 .allDays{
     display:grid;
-    grid-template-columns: repeat(7, 1fr);   
+    grid-template-columns: repeat(7, 1fr);
+    grid-row-gap: 20px;   
 }
 
 .dayToChoose{
     width:40px;
+    cursor:pointer;
     margin: auto;
     border: solid 1px black;
     border-radius: 100%;
