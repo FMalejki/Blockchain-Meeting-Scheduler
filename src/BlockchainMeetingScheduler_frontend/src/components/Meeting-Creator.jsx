@@ -26,17 +26,20 @@ function MeetingCreator() {
     };
 
     const [selectedDates, setSelectedDates] = useState([]);
-
+    const [alertSecond, setAlertSecond] = useState(false);
+ 
     const handleDatesSelected = (dates) => {
         setSelectedDates(dates);
     };
 
     const secondStepButtonNext = () => {
-        if(selectedDates.lenght === 0){
-            console.log("zero wypelnij");
+        console.log(selectedDates)
+        if(selectedDates.length === 0){
+            setAlertSecond(true);
         }
         else{
             setNumOfStep(2);
+            setAlertSecond(false);
         }
     };
 
@@ -74,11 +77,11 @@ function MeetingCreator() {
                 <br />
                 <input type="text" value={meetingName} onChange={handleMeetingNameChange} className="form-control center" placeholder="Name of the Meeting..."/>
                 <br  />
-                <button type="button" onClick={firstStep} className="btn btn-lg btn-success">NEXT!</button>
                 {alertFirst && (
-                <div class="alert alert-danger">
+                <p class="font-size-alert">
                     Please fill in the field.
-                </div> )}
+                </p> )}
+                <button type="button" onClick={firstStep} className="btn btn-lg btn-success">NEXT!</button>
             </div>
         </div>
         <div className={`centered-container ${numOfStep === 1 ? 'activeOnMeetingCreator' : 'inactive'}`}>
@@ -86,7 +89,12 @@ function MeetingCreator() {
                 <h1 className="mt-10">CHOOSE A DATE FOR YOUR MEETING</h1>
                 <br />
                 <Calendar onDatesSelected={handleDatesSelected}/>
-                <br  />
+                <br />
+                {alertSecond && (
+                    <p class="font-size-alert">
+                        Please choose at least one date.
+                    </p>
+                )}
                 <div className="div-for-buttons">
                     <button type="button" onClick={secondStepButtonPrev} className={`button-prev btn btn-lg btn-light border border-1`}>PREVIOUS!</button>
                     <button type="button" onClick={secondStepButtonNext} className="button-next btn btn-lg btn-success">NEXT!</button>
@@ -95,7 +103,7 @@ function MeetingCreator() {
         </div>
         <div className={`centered-container ${numOfStep === 2 ? 'activeOnMeetingCreator' : 'inactive'}`}>
             <div className="container center">
-                <h1 className="mt-10">INSERT ADDITIONAL INFORMATION ABOUT MEETING</h1>
+                <h1 className="mt-10">ADDITIONAL INFORMATION ABOUT MEETING</h1>
                 <br />
                 <h2>Description</h2>
                 <br />
