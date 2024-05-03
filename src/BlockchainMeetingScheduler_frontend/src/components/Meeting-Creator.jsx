@@ -25,6 +25,44 @@ function MeetingCreator() {
         setMeetingName(event.target.value)
     };
 
+    const [selectedDates, setSelectedDates] = useState([]);
+
+    const handleDatesSelected = (dates) => {
+        setSelectedDates(dates);
+    };
+
+    const secondStepButtonNext = () => {
+        if(selectedDates.lenght === 0){
+            console.log("zero wypelnij");
+        }
+        else{
+            setNumOfStep(2);
+        }
+    };
+
+    const thirdStepButtonPrev = () => {
+        setNumOfStep(1);
+    };
+
+    const thirdStepButtonFinish = () => {
+        console.log("finished")
+    };
+
+    const [startHour, setStartHour] = useState(10);
+    const [endHour, setEndHour] = useState(18);
+    
+    const handleStartHourChange = (event) => {
+        if( parseInt(event.target.value) < endHour){    
+            setStartHour(parseInt(event.target.value));
+        }
+    };
+    
+    const handleEndHourChange = (event) => {
+        if( parseInt(event.target.value) > startHour ){    
+            setEndHour(parseInt(event.target.value));
+        }
+    };
+
   return (
 <div>
         <header className="sticky navbar bg-light">
@@ -47,11 +85,11 @@ function MeetingCreator() {
             <div className="container center">
                 <h1 className="mt-10">CHOOSE A DATE FOR YOUR MEETING</h1>
                 <br />
-                <Calendar />
+                <Calendar onDatesSelected={handleDatesSelected}/>
                 <br  />
                 <div className="div-for-buttons">
                     <button type="button" onClick={secondStepButtonPrev} className={`button-prev btn btn-lg btn-light border border-1`}>PREVIOUS!</button>
-                    <button type="button" className="button-next btn btn-lg btn-success">NEXT!</button>
+                    <button type="button" onClick={secondStepButtonNext} className="button-next btn btn-lg btn-success">NEXT!</button>
                 </div>
             </div>
         </div>
@@ -66,15 +104,33 @@ function MeetingCreator() {
                 <h2>Choose hours for the Meeting</h2>
                 <br />
                 <div className="range-container">
-                <h2>Meeting Hours Selector</h2>
+                    <h2 class="marginBottom5">Meeting Hours Selector</h2>
                     <div className="sliders-control">
-                        <input type="range"  min="0" max="24" value="10" id="fromSlider"/>
-                        <input type="range" min="0" max="24" value="18" id="customRange2"/>
+                        <input
+                        type="range"
+                        min="0"
+                        max="24"
+                        value={startHour}
+                        onChange={handleStartHourChange}
+                        className="hour-slider"
+                        />
+                        <input
+                        type="range"
+                        min="0"
+                        max="24"
+                        value={endHour}
+                        onChange={handleEndHourChange}
+                        className="hour-slider"
+                        />
                     </div>
                 </div>
-                <div className="div-for-buttons">
-                    <button type="button" className="button-prev btn btn-lg btn-light border border-1">PREVIOUS!</button>
-                    <button type="button" className="button-next btn btn-lg btn-success">NEXT!</button>
+                <div class="marginTop5">
+                    <h2>Hours selected:</h2>
+                    <p>{startHour}:00 - {endHour}:00</p>
+                </div>
+                <div className="marginTop5 div-for-buttons">
+                    <button onClick={thirdStepButtonPrev} type="button" className="button-prev btn btn-lg btn-light border border-1">PREVIOUS!</button>
+                    <button onClick={thirdStepButtonFinish} type="button" className="button-next btn btn-lg btn-success">NEXT!</button>
                 </div>
             </div>
         </div>

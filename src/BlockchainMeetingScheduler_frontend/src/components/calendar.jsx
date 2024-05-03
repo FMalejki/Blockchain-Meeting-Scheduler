@@ -1,53 +1,105 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles/calendar.scss';
 
 
-function Calendar(){
+const Calendar = ({ onDatesSelected }) => {
+    const currentDate = new Date();
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
     const [ifActive, setIfActive] = useState(false);
+    const [month, changeMonth] = useState(currentMonth);
+    const [day, changeDay] = useState(currentDay);
+    const [year, changeYear] = useState(currentYear);
 
-    const eee = () => {
-        console.log("eeeClicked");
-        setIfActive(!ifActive);
+
+    const [selectedDates, setSelectedDates] = useState([]);
+
+    const whichMonth = (month) => {
+        const namesOfMonths = ['January','February','March','April','May','June','July','August','September','October','November','December']; 
+        return namesOfMonths[month];
     };
 
-    const [selectedDate, setSelectedDate] = useState(null);
+    const decreaseYear = () => {
+        if(year > 0){
+            changeYear(year-1);
+        }
+    };
 
-    // Function to get the number of days in a month
+    const increaseYear = () => {
+        changeYear(year+1);
+    };
+
+    const increaseMonth = () => {
+        if(month === 11){
+            changeMonth(0);
+            increaseYear();
+        }
+        else{
+            changeMonth(month+1);
+        }
+    };
+
+    const descreaseMonth = () => {
+        if(month === 0){
+            changeMonth(11);
+            decreaseYear();
+        }
+        else{
+            changeMonth(month-1);
+        }
+    };
+
+    const dateSelection = (dayTmp) => {
+        const selectedDate = {year, 'month': month+1, 'day': dayTmp};
+        const isDateAlreadySelected = selectedDates.some(date =>
+            date.year === selectedDate.year &&
+            date.month === selectedDate.month &&
+            date.day === selectedDate.day
+        );
+        if (isDateAlreadySelected){
+            setSelectedDates(prevSelectedDates => prevSelectedDates.filter(date =>
+                 date.month !== selectedDate.month ||
+                 date.year !== selectedDate.year ||
+                 date.day !== selectedDate.day
+            ));
+        }else{
+            setSelectedDates(prevSelectedDates => [...prevSelectedDates, selectedDate]);
+        }
+    };
+    
     const getDaysInMonth = (year, month) => {
         return new Date(year, month + 1, 0).getDate();
     };
 
-    // Function to get the starting day of the month
     const getStartingDayOfMonth = (year, month) => {
-        return new Date(year, month, 1).getDay(); // Sunday is 0, Monday is 1, etc.
+        return new Date(year, month, 1).getDay();
     };
 
-    // Function to handle date click event
-    const handleDateClick = (date) => {
-        setSelectedDate(date);
-    };
-
-    // Example: Display dates for January 2024
-    const year = 2024;
-    const month = 2; // January (0-indexed)
     const daysInMonth = getDaysInMonth(year, month);
-    const startingDay = getStartingDayOfMonth(year, month);
-    console.log(startingDay)
+    let startingDay = getStartingDayOfMonth(year, month);
+    if(startingDay === 0) {
+        startingDay = 7;
+    }
+    useEffect(() => {
+        // Pass selectedDates array to the parent component whenever it changes
+        onDatesSelected(selectedDates);
+    }, [selectedDates, onDatesSelected]);
 
     return(
         <div className="containerCal">
             <div className="calendarDiv">
                 <div className="calendarTop">
-                    <div className="arrowLYear">+</div>
+                    <div onClick={decreaseYear} className="arrow arrow-left yeararrow-left"></div>
                     <div className="calendarYear">
-                        2024
+                        {year}
                     </div>
-                    <div className="arrowRYear">+</div>
+                    <div onClick={increaseYear} className="arrow arrow-right yeararrow-right"></div>
                 </div>
                 <div className="calendarMonths">
-                    <div className="arrowLMonth">-</div>
-                    <div className="Months">January</div>
-                    <div className="arrowRMonth">+</div>
+                    <div onClick={descreaseMonth} className="arrow arrow-left montharrow-left"></div>
+                    <div className="Months">{whichMonth(month)}</div>
+                    <div onClick={increaseMonth} className="arrow arrow-right montharrow-right"></div>
                 </div>
                 <div className="weekDays">
                     <div className="day">Mon</div>
@@ -59,22 +111,26 @@ function Calendar(){
                     <div className="day">Sun</div>
                 </div>
                 <div className="allDays">
-                    {[...Array(startingDay-1).keys()].map((day) => (
+                    {
+                    [...Array(startingDay-1).keys()].map((day) => (
                         <div className={`dayToChoose}`}>.</div>
                     ))}
                     {[...Array(daysInMonth).keys()].map((day) => (
                         <div
                             key={day + 1}
-                            className={`dayToChoose ${selectedDate === day + 1 ? 'selected' : ''}`}
+                            className={`dayToChoose ${selectedDates.some(date =>
+                                date.year === year &&
+                                date.month === month + 1 &&
+                                date.day === day + 1   
+                            ) ? 'bg-success text-white' : ''}`}
                             style={{ background: ifActive ? '#ADD8E6' : '#fff' }}
-                            onClick={() => handleDateClick(day + 1)}
+                            onClick={() => dateSelection(day + 1)}
                         >
                             {day + 1}
                         </div>
                     ))}
                 </div>
                 <div className="calendarDays">
-
                 </div>
             </div>
         </div>

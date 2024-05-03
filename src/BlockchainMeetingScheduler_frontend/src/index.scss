@@ -129,48 +129,32 @@ header{
   margin-left:auto;
 }
 
-input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance: none;
-  pointer-events: all;
-  width:24px;
-  height:24px;
-  background-color: #fff;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px #c6c6c6;
-  cursor: pointer;
-}
-
-input[type=range]::-moz-range-thumb{
-  -webkit-appearance: none;
-  pointer-events: all;
-  width:24px;
-  height:24px;
-  background-color: #fff;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px #c6c6c6;
-  cursor: pointer;   
-}
-
-input[type=range]::-webkit-slider-thumb:hover {
-  background: #f7f7f7;
-}
-
-input[type=range]::-webkit-slider-thumb:active{
-  box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-  -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-}
-
-input[type=range]{
-  margin-right: 100px;
+.hour-slider {
   -webkit-appearance: none;
   appearance: none;
   height: 2px;
-  width: 50%;
-  position: absolute;
-  background-color: #c6c6c6;
-  pointer-events: none;
+  width: 100%;
 }
 
+.hour-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.hour-slider::-moz-range-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+}
 .activeOnMeetingCreator{
   display:flex;
 }
@@ -179,23 +163,24 @@ input[type=range]{
   display: none;
 }
 
-#fromSlider{
-  height:0;
-  z-index:1;
-}
-
-.sliders-control{
-  align-content: center;
+.sliders-control {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  align-self: center;
-  min-height: 50px;
-  margin: auto;
+  margin: auto; 
 }
 
-.range-container{   
+.marginBottom5{
+  margin-bottom: 5%;
+}
+
+.marginTop5{
+  margin-top:5%;
+}
+
+.range-container {
   width: 80%;
-  align-content: center;
-  align-items: center;
-  align-self: center;
   margin: auto;
+  text-align: center;
 }
