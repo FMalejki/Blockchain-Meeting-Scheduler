@@ -3,7 +3,9 @@ import { BlockchainMeetingScheduler_backend } from 'declarations/BlockchainMeeti
 import { BrowserRouter as Router, Route, Switch,Link } from 'react-router-dom';
 import Home from './components/Home.jsx';
 import MeetingCreator from './components/Meeting-Creator.jsx';
-import MeetingNumber from './components/Meeting-Number.jsx';
+import MeetingNumberAdd from './components/Meeting-Number-Add.jsx';
+import MeetingNumberView from './components/Meeting-Number-View.jsx';
+
 
 
 function App() {
@@ -43,8 +45,11 @@ function App() {
           <Route path="/meeting-creator">
             <MeetingCreator/>
           </Route>
-          <Route path="/meeting-SYA246">
-            <MeetingNumber/>
+          <Route path="/meeting-SYA246-add">
+            <MeetingNumberAdd/>
+          </Route>
+          <Route path="/meeting-SYA246-view">
+            <MeetingNumberView/>
           </Route>
         </Switch>
       </Router>

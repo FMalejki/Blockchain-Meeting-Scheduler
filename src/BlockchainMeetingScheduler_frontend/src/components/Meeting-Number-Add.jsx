@@ -1,16 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './styles/meeting-number.scss'
 
-function MeetingNumber() {
+function MeetingNumberAdd() {
     //hoovering check
     const [isHover, setIsHover] = useState([]);
     //end
     //check if mouse is down or not
     const [isMouseDown, setIsMouseDown] = useState(false);
     //end
-    const meetingName = "ble ble ble"
-    const meetingDescription = "a main goal of the meeting is to say something ambicious"
+    //array with data of one user
+    const [matrix, setMatrix] = useState([[]]);
+    //end
+    //data collected from backend:
+    const meetingName = "AGH BLOCKCHAIN MEETUP";
+    const meetingDescription = "a main goal of the meeting is to say something ambicious";
     const arrOfSelectedDays = [{'year':2024, 'month':5, 'day':11},{'year':2024, 'month':5, 'day':12},{'year':2024, 'month':5, 'day':13}];
+    //end
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const lenArrOfSelectedDays = arrOfSelectedDays.length;
     const startHour = 6;
     const endHour = 22;
@@ -36,29 +42,76 @@ function MeetingNumber() {
         }
     };
 
-    const submitAvailability = () => {
+    const addRow = () => {
+        setMatrix(prevMatrix => [...prevMatrix, []]);
+    };
 
-        const datesChecked = isHover.map((value,index) => {
-            if(value === true) {
-                return index;
+
+    const addElementToRow = (indexToAdd, element) => {
+        setMatrix(prevMatrix => {
+            const updatedMatrix = [...prevMatrix];
+            if (!updatedMatrix[indexToAdd]) {
+                updatedMatrix[indexToAdd] = [];
             }
-        }).filter(index => index !== undefined);
+            updatedMatrix[indexToAdd].push(element);
+            return updatedMatrix;
+        });
+    };
 
-        console.log(datesChecked);
-        //we need to create a table thats the same length as arrOfSelectedDays
-        //then for each of those days (in array) add halfhours that the user checked
-        //at this moment we have a created and functioning array of selected hours for every day
-        //now we just need to pass this table to backend and using data collected from backend
-        //create a presentation of all data in the same form like on lettucemeet 
-        datesChecked.array.forEach(element => {
-            for(let i = 0; i < arrOfSelectedDays.length; i++){
-                if(element < (i+1)*100){
-                    
+    const submitAvailability = () => {
+        if(!isSubmitting){
+            setIsSubmitting(true);
+            const datesChecked = isHover.map((value,index) => {
+                if(value === true) {
+                    return index;
+                }
+            }).filter(index => index !== undefined);
+            //we need to create a table thats the same length as arrOfSelectedDays
+            //then for each of those days (in array) add halfhours that the user checked
+            //at this moment we have a created and functioning array of selected hours for every day
+            //now we just need to pass this table to backend and using data collected from frontend
+            //create a presentation of all data in the same form like on lettucemeet
+            console.log(datesChecked);
+            for( let i = 0; i < arrOfSelectedDays.length-1; i++){
+                addRow();
+            }
+            for( let i = 0; i < datesChecked.length; i++){
+                for( let j = 0; j < arrOfSelectedDays.length; j++){
+                    if(datesChecked[i] < (j+1)*100){
+                        
+                        setMatrix(prevMatrix => {
+                            const updatedMatrix = [...prevMatrix];
+                            updatedMatrix[j].push(datesChecked[i]-(j)*100);
+                            return updatedMatrix;
+                        });
+                        break;
+                    }
                 }
             }
-        });
+            setIsSubmitting(false);
+        }
+    };
 
-    }
+    useEffect(() => {
+        removeDuplicatesFromMatrix();
+    }, [matrix]);
+
+
+    const removeDuplicatesFromMatrix = () => {
+        for( let i = 0; i < matrix.length; i++){
+            if(matrix[i]){
+                for( let j = 0; j < matrix[i].length; j++){
+                    const searchedNum = matrix[i][j];
+                    for( let k = j + 1; k < matrix[i].length; k++){
+                        if(searchedNum === matrix[i][k]){
+                            matrix[i].splice(k,matrix[i].length - k);
+                        }
+                    }
+                }
+            }
+        }
+    };
+
 
     const mouseOverObjectExit = (index) => {
         setIsHover((prevState) => {
@@ -84,12 +137,12 @@ function MeetingNumber() {
                 return newState;      
             });
         }
-    }
+    };
     
     const handleMouseUp = () => {
         setIsMouseDown(false);
         console.log("changed");
-    }
+    };
 
     const handleClickOnObject = (index) =>{
         if(!isHover[index]){
@@ -106,7 +159,7 @@ function MeetingNumber() {
                 return newState;      
             });
         }
-    }
+    };
        
 
 return(
@@ -153,7 +206,7 @@ return(
                 }
             </div>
             <br />
-            <button type="button" onClick={submitAvailability} className="button-next btn btn-lg btn-success">NEXT!</button>
+            <button type="button" onClick={submitAvailability} className="button-next btn btn-lg btn-success">VIEW OTHERS AVAILABILITY!</button>
             <br />
         </div>
     </div>
@@ -161,4 +214,4 @@ return(
     
 }
 
-export default MeetingNumber;
+export default MeetingNumberAdd;
