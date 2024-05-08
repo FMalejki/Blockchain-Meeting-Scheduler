@@ -159,6 +159,10 @@ header{
   display:flex;
 }
 
+.active{
+  display: block;
+}
+
 .inactive{
   display: none;
 }

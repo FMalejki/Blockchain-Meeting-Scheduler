@@ -4,6 +4,7 @@ thread_local! {
     //not used
     static WPISY: RefCell<Vec<String>> = RefCell::default();
 }
+//hash_map
 
 #[ic_cdk::query]
 fn greet(name: String) -> String {
