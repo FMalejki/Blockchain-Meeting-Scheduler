@@ -1,12 +1,35 @@
 import React, {useState} from 'react';
+import { BlockchainMeetingScheduler_backend } from '../declarations/BlockchainMeetingScheduler_backend/index';
 import '../index.scss';
 import Calendar from './calendar.jsx';
 
 function MeetingCreator() {
     
+    //variables:
     const [numOfStep, setNumOfStep] = useState(0);
     const [meetingName, setMeetingName] = useState('');
     const [alertFirst, setAlertFirst] = useState(false);
+    const [selectedDates, setSelectedDates] = useState([]);
+    const [alertSecond, setAlertSecond] = useState(false);
+    const [startHour, setStartHour] = useState(10);
+    const [endHour, setEndHour] = useState(18);
+    const [meetingDescription, setMeetingDescription] = useState('');
+    const [dayArray, setDayArray] = useState([]);
+    const [monthArray, setMonthArray] = useState([]);
+    const [yearArray, setYearArray] = useState([]);
+    //end
+
+
+    //creating a unique uuid for created meeting
+
+    async function createUniqueID(name) {
+        const uuid = await BlockchainMeetingScheduler_backend.unique_ID(name);
+        console.log(uuid);
+    }
+
+    //end
+
+    //steps / buttons
 
     const firstStep = () => {
       if(meetingName.trim() === ''){
@@ -20,17 +43,6 @@ function MeetingCreator() {
     const secondStepButtonPrev = () => {
         setNumOfStep(0)
     }; 
-
-    const handleMeetingNameChange = (event) => {
-        setMeetingName(event.target.value)
-    };
-
-    const [selectedDates, setSelectedDates] = useState([]);
-    const [alertSecond, setAlertSecond] = useState(false);
- 
-    const handleDatesSelected = (dates) => {
-        setSelectedDates(dates);
-    };
 
     const secondStepButtonNext = () => {
         console.log(selectedDates)
@@ -48,11 +60,28 @@ function MeetingCreator() {
     };
 
     const thirdStepButtonFinish = () => {
-        console.log("finished")
+        dataRework();
+        console.log("finished");
+        console.log("startHour: ",startHour, "endHour: ", endHour, "selectedDates: ", selectedDates);
+        console.log("meetingName: ", meetingName, "meetingDescription: ", meetingDescription);
+        console.log("days selected: ", dayArray, "months selected: ", monthArray, "years selected: ", yearArray);
     };
 
-    const [startHour, setStartHour] = useState(10);
-    const [endHour, setEndHour] = useState(18);
+    //end
+
+    //handling changes
+
+    const handleMeetingNameChange = (event) => {
+        setMeetingName(event.target.value)
+    };
+ 
+    const handleDatesSelected = (dates) => {
+        setSelectedDates(dates);
+    };
+
+    const handleMeetingDescriptionChange = (event) => {
+        setMeetingDescription(event.target.value);
+    };
     
     const handleStartHourChange = (event) => {
         if( parseInt(event.target.value) < endHour){    
@@ -65,6 +94,24 @@ function MeetingCreator() {
             setEndHour(parseInt(event.target.value));
         }
     };
+
+    //end
+    //rework of data in selectedDates:
+    async function dataRework() {
+        let arrTmp = selectedDates;
+        for(let i = 0;  i < arrTmp.length; i++ ){
+            await setDayArray(prevDays => [...prevDays, arrTmp[i].day]);
+            await setMonthArray(prevMonths => [...prevMonths, arrTmp[i].month]);
+            await setYearArray(prevYears => [...prevYears, arrTmp[i].year]);
+        }
+        
+        //in here we also need to make sure that user doesnt click this button more than once
+        //we can always cut the array to take only the length of selectedDates array or
+        //just make the whole page disappear after FINISH button is clicked - global variable
+
+        await setSelectedDates([]); //why it isnt taking [] value ?
+    };
+    //end   
 
   return (
 <div>
@@ -107,7 +154,7 @@ function MeetingCreator() {
                 <br />
                 <h2>Description</h2>
                 <br />
-                <input type="text" className="form-control center" placeholder="Description of the Meeting..."/>
+                <input type="text" value={meetingDescription} onChange={handleMeetingDescriptionChange} className="form-control center" placeholder="Description of the Meeting..."/>
                 <br />
                 <h2>Choose hours for the Meeting</h2>
                 <br />

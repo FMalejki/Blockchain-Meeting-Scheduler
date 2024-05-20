@@ -45,11 +45,9 @@ function App() {
           <Route path="/meeting-creator">
             <MeetingCreator/>
           </Route>
-          <Route path="/meeting-SYA246-add">
-            <MeetingNumberAdd/>
+          <Route path="/meeting-add/:uuid" component={MeetingNumberAdd}>
           </Route>
-          <Route path="/meeting-SYA246-view">
-            <MeetingNumberView/>
+          <Route path="/meeting-view/:uuid" component={MeetingNumberView}>
           </Route>
         </Switch>
       </Router>

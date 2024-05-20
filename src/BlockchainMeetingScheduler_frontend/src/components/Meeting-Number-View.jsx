@@ -2,7 +2,15 @@ import React, {useState, useEffect} from 'react';
 import './styles/meeting-number.scss';
 import '../index.scss';
 
-function MeetingNumberView() {
+const MeetingNumberView = ({ match }) => {
+    //getting uuid (unique ID)
+    const uuid = match.params.uuid;
+    console.log(uuid);
+    //end
+    //collecting all data from backend using uuid
+
+
+    //end
     //hoovering check
     const [isHover, setIsHover] = useState([]);
     //end

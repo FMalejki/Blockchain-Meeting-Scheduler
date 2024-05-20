@@ -1,7 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import './styles/meeting-number.scss'
 
-function MeetingNumberAdd() {
+const MeetingNumberAdd = ({ match }) =>  {
+    //getting uuid (unique ID)
+    const uuid = match.params.uuid;
+    console.log(uuid);
+    //end
     //hoovering check
     const [isHover, setIsHover] = useState([]);
     //end
@@ -88,8 +92,12 @@ function MeetingNumberAdd() {
                     }
                 }
             }
-            setIsSubmitting(false);
+            setIsSubmitting(datesChecked);
         }
+        
+        //NAME OF THE USER AND INTERNET IDENTITY CONFIGURATION
+
+        console.log(matrix);
     };
 
     useEffect(() => {

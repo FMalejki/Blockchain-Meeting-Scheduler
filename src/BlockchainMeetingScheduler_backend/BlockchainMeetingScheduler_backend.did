@@ -1,5 +1,10 @@
 service : {
-  dodaj_wpis : (text) -> ();
-  greet : (text) -> (text) query;
-  pobierz_wpisy : () -> (vec text) query;
+    dodaj_wpis : (text) -> ();
+    greet : (text) -> (text) query;
+    pobierz_wpisy : () -> (vec text) query;
+    unique_ID : (text) -> (text) query;
+    check_if_ID_is_Unique : (text) -> (bool) query;
+    add_meeting : (text, text, nat8, nat8, text) -> ();
+    availability_data_rework : (vec vec nat8) -> () query;
+    add_user : (text, text, text, vec nat8) -> ();
 }
